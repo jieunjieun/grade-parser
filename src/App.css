@@ -1,7 +1,9 @@
 .App {
   padding: 20px;
 }
-
+.guide-btn {
+  margin-bottom: 15px;
+}
 /* tile uploaded pictures */
 .upload-list-inline .ant-upload-list-item {
   float: left;

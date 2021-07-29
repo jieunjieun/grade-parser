@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Progress, Upload, Typography } from 'antd';
 import { UploadChangeParam, UploadFile } from 'antd/lib/upload/interface';
-import { recognize } from './process';
-import { InboxOutlined } from '@ant-design/icons';
+import { analyze } from './process';
+import { InboxOutlined, LoadingOutlined } from '@ant-design/icons';
 import './App.css';
+import GuideModal from './GuideModal';
 
 const { Dragger } = Upload;
 const { Text } = Typography;
@@ -11,7 +12,12 @@ const { Text } = Typography;
 function App() {
   const [img, setImg] = useState<UploadFile>();
   const [grade, setGrade] = useState(0);
+
+  const [isLoading, setLoading] = useState(false);
   const [processPercent, setProcessPercent] = useState(0);
+  const [guideModalShow, setGuideModalShow] = useState(false);
+
+  const setter = { setLoading, setProcessPercent, setGrade };
 
   const onFileUpload = ({ file }: UploadChangeParam) => {
     if (file.status !== 'uploading') {
@@ -21,10 +27,25 @@ function App() {
 
   return (
     <div className="App">
+      {/* 가이드 확인하기 버튼 */}
+      <Button
+        onClick={() => setGuideModalShow(true)}
+        type="primary"
+        size="large"
+        className="guide-btn"
+      >
+        사용방법 확인하기
+      </Button>
+      <GuideModal
+        isShow={guideModalShow}
+        onOkBtnClick={() => setGuideModalShow(false)}
+        onCancelBtnClick={() => setGuideModalShow(false)}
+      />
       {/* 이미지 추가 Uploader */}
       <Dragger
         onChange={onFileUpload}
         multiple={false}
+        maxCount={1}
         listType="picture"
         beforeUpload={() => false}
       >
@@ -43,13 +64,12 @@ function App() {
           size="large"
           type="primary"
           disabled={processPercent > 0}
-          onClick={() =>
-            recognize(img as unknown as File, setGrade, setProcessPercent)
-          }
+          onClick={() => analyze(img as unknown as File, setter)}
         >
-          Recognize
+          Analyze
         </Button>
       )}
+      {isLoading && <LoadingOutlined />}
 
       {/* 분석 진행 상황 그래프 */}
       {processPercent > 0 && (

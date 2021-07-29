@@ -1,20 +1,27 @@
 import React from 'react';
 import Tesseract from 'tesseract.js';
 
-export const recognize = (
-  img: File,
-  setter: React.Dispatch<number>,
-  processSetter: React.Dispatch<number>
-) => {
+interface Setter {
+  setGrade: React.Dispatch<number>;
+  setProcessPercent: React.Dispatch<number>;
+  setLoading: React.Dispatch<boolean>;
+}
+
+export const analyze = (img: File, setter: Setter) => {
+  const { setProcessPercent, setGrade, setLoading } = setter;
+
   Tesseract.recognize(img, 'eng', {
     logger: m => {
       if (m.status === 'recognizing text') {
-        processSetter(m.progress * 100);
+        setLoading(false);
+        setProcessPercent(m.progress * 100);
+        return;
       }
+      setLoading(true);
     },
   }).then(({ data: { text } }) => {
     const parsedText = parseRecognizeText(text);
-    setter(calculate(parsedText));
+    setGrade(calculate(parsedText));
   });
 };
 
