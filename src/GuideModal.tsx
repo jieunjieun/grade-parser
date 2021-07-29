@@ -64,6 +64,14 @@ const GuideModal: React.FC<GuideModalProps> = props => {
           alt="저장한 이미지를 분석기에 추가하여 확인합니다."
         />
       </div>
+      <div className="row">
+        6. 결과를 확인합니다.
+        <img
+          className="sample-img"
+          src="https://user-images.githubusercontent.com/23434757/127522983-8dee44f0-e3dd-4fe5-9218-852433ba6083.png"
+          alt="결과를 확인합니다."
+        />
+      </div>
     </Modal>
   );
 };
