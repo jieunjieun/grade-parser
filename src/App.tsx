@@ -85,7 +85,6 @@ function App() {
 
       {/* 참고사항 */}
       <div>
-        <div></div>
         <Card
           title="참고사항"
           style={{ marginTop: '30px', backgroundColor: 'lightyellow' }}
@@ -104,32 +103,34 @@ function App() {
           평균등급 <br />
           ※성취평가제(A∙B∙C∙D∙E) 교과 석차등급 환산 : (원점수―과목평균)/표준편차
           = 표준화 점수를 석차등급으로 환산
-          <table>
-            <tr>
-              <td>표준화점수</td>
-              <td>3.00~1.76</td>
-              <td>1.75~1.23</td>
-              <td>1.22~0.74</td>
-              <td>0.73~0.26</td>
-              <td>0.25~-0.25</td>
-              <td>-0.26~-0.73</td>
-              <td>-0.74~-1.22</td>
-              <td>-1.23~-1.75</td>
-              <td>-1.76~-3.00</td>
-            </tr>
-            <tbody>
-              <td>석차등급</td>
-              <td>1등급</td>
-              <td>2등급</td>
-              <td>3등급</td>
-              <td>4등급</td>
-              <td>5등급</td>
-              <td>6등급</td>
-              <td>7등급</td>
-              <td>8등급</td>
-              <td>9등급</td>
-            </tbody>
-          </table>
+          <div style={{ overflow: 'scroll' }}>
+            <table>
+              <tr>
+                <td>표준화점수</td>
+                <td>3.00~1.76</td>
+                <td>1.75~1.23</td>
+                <td>1.22~0.74</td>
+                <td>0.73~0.26</td>
+                <td>0.25~-0.25</td>
+                <td>-0.26~-0.73</td>
+                <td>-0.74~-1.22</td>
+                <td>-1.23~-1.75</td>
+                <td>-1.76~-3.00</td>
+              </tr>
+              <tbody>
+                <td>석차등급</td>
+                <td>1등급</td>
+                <td>2등급</td>
+                <td>3등급</td>
+                <td>4등급</td>
+                <td>5등급</td>
+                <td>6등급</td>
+                <td>7등급</td>
+                <td>8등급</td>
+                <td>9등급</td>
+              </tbody>
+            </table>
+          </div>
         </Card>
       </div>
     </div>
