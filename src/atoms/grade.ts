@@ -1,6 +1,5 @@
 import { atom, selector } from 'recoil';
 import { calculate } from '../util/process';
-import { isEmpty } from '../util';
 
 export const parsedDataState = atom<string[][]>({
   key: 'parsedDataState',
