@@ -2,14 +2,13 @@ import React from 'react';
 import Tesseract from 'tesseract.js';
 
 interface Setter {
-  setGrade: React.Dispatch<number>;
   setProcessPercent: React.Dispatch<number>;
   setLoading: React.Dispatch<boolean>;
-  setError: React.Dispatch<boolean>;
+  setParsedData: any;
 }
 
 export const analyze = (img: File, setter: Setter) => {
-  const { setProcessPercent, setGrade, setLoading, setError } = setter;
+  const { setProcessPercent, setLoading, setParsedData } = setter;
 
   Tesseract.recognize(img, 'eng', {
     logger: m => {
@@ -22,12 +21,7 @@ export const analyze = (img: File, setter: Setter) => {
     },
   }).then(({ data: { text } }) => {
     const parsedText = parseRecognizeText(text);
-    const resultGrade = calculate(parsedText);
-    if (!!resultGrade) {
-      setGrade(resultGrade);
-      return;
-    }
-    setError(true);
+    setParsedData(parsedText);
   });
 };
 
@@ -54,8 +48,7 @@ const parseScoreInfo = (score: string) => {
 
 /** pass 과목을 필터링하는 함수 */
 const filterPassSubject = (parsedArr: string[][]) => {
-  const floatRegex = /(\d*\.?\d+)/g;
-  return parsedArr.filter(arr => !arr.includes('P') && floatRegex.test(arr[1]));
+  return parsedArr.filter(arr => !arr.includes('P'));
 };
 
 /** a 이상 b 이하인지를 확인하는 함수 */
@@ -80,33 +73,45 @@ const getOrderGradeWithStandardDeviationScore = (score: number) => {
 
 /** 석차등급이 없는 과목의 석차등급을 구하여 할당해주는 함수 */
 const convertToOrderGrade = (subjectScore: string[]) => {
+  let newSubjectScore = [...subjectScore];
   const { original, average, standardDeviation } = parseScoreInfo(
     subjectScore[1]
   );
   const numberGrade = (original - average) / standardDeviation;
 
-  const newOrderGradeSubjectScore = subjectScore as [
-    string,
-    string,
-    string,
-    number
-  ];
-  newOrderGradeSubjectScore[3] =
-    getOrderGradeWithStandardDeviationScore(numberGrade);
-  return subjectScore;
+  newSubjectScore[3] = String(
+    getOrderGradeWithStandardDeviationScore(numberGrade)
+  );
+
+  return newSubjectScore;
 };
 
-const calculate = (arr: string[][]) => {
+const addGrade = (subjectScore: string[]) => {
+  let newSubjectScore = [...subjectScore];
+  const regex = new RegExp(/(\d)\(\d*\)/);
+  const matchedScore = newSubjectScore[2].match(regex);
+
+  newSubjectScore[3] = (matchedScore && matchedScore[1]) || '';
+  return newSubjectScore;
+};
+
+export const calculate = (arr: string[][]) => {
   /** P 과목 제외  */
   const filteredPassSubjectScore = filterPassSubject(arr);
 
   /** 석차등급이 없는 경우의 로직  */
   const hasNotOrderGrade = ([, , , numberGrade]: string[]) => !numberGrade;
 
+  /** 석차등급이 있지만 성취평가제 등급이 없는 경우의 로직 */
+  const hasNotAlphaGrade = ([, , alphaGrade]: string[]) =>
+    new RegExp(/(\d)\(\d*\)/).test(alphaGrade);
+
   filteredPassSubjectScore.forEach((subjectScore, index) => {
-    /** 석차 등급이 없는 경우 (성취평가제 교과인 경우, ex. A, B, C) */
-    if (hasNotOrderGrade(subjectScore)) {
-      /** 해당 과목의 석차등급을 구하여 할당해준다. (표준화 점수 사용하여 환산) */
+    if (hasNotAlphaGrade(subjectScore)) {
+      /** 석차 등급은 있는데 성취평가제 등급이 없는 경우 */
+      filteredPassSubjectScore[index] = addGrade(subjectScore);
+    } else if (hasNotOrderGrade(subjectScore)) {
+      /** 석차 등급이 없는 경우 (성취평가제 교과인 경우, ex. A, B, C) */
       filteredPassSubjectScore[index] = convertToOrderGrade(subjectScore);
     }
   });

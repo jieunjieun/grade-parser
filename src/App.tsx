@@ -6,20 +6,32 @@ import { InboxOutlined, LoadingOutlined } from '@ant-design/icons';
 import GuideModal from './components/GuideModal';
 import Notice from './components/Notice';
 import './App.css';
+import CalculateTable from './components/CalculateTable';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  calculatedGrade,
+  parsedDataState,
+  processPercentState,
+} from './atoms/grade';
 
 const { Dragger } = Upload;
 const { Text } = Typography;
 
 function App() {
   const [img, setImg] = useState<UploadFile>();
-  const [grade, setGrade] = useState(0);
+  const grade = useRecoilValue(calculatedGrade);
+  const setParsedData = useSetRecoilState(parsedDataState);
 
   const [isLoading, setLoading] = useState(false);
-  const [processPercent, setProcessPercent] = useState(0);
+  const [processPercent, setProcessPercent] =
+    useRecoilState(processPercentState);
   const [guideModalShow, setGuideModalShow] = useState(false);
-  const [error, setError] = useState(false);
 
-  const setter = { setLoading, setProcessPercent, setGrade, setError };
+  const setter = {
+    setLoading,
+    setProcessPercent,
+    setParsedData,
+  };
 
   const onFileUpload = ({ file }: UploadChangeParam) => {
     if (file.status !== 'uploading') {
@@ -71,28 +83,21 @@ function App() {
           Analyze
         </Button>
       )}
+
       {isLoading && <LoadingOutlined />}
 
       {/* 분석 진행 상황 그래프 */}
       {processPercent > 0 && (
-        <Progress
-          status={error ? 'exception' : 'active'}
-          percent={Number(processPercent.toFixed(2))}
-        />
+        <Progress percent={Number(processPercent.toFixed(2))} />
       )}
 
+      <CalculateTable />
+
       {/* 결과 등급 */}
-      {!!grade && grade > 0 && (
+      {grade > 0 && (
         <div>
           당신의 등급은: <Text mark>{grade.toFixed(2)}</Text>등급 입니다.
         </div>
-      )}
-
-      {error && (
-        <Text strong>
-          이미지 인식에 실패하였습니다. 화질을 높이거나 올바른 이미지인지
-          확인하여 다시 시도해주세요.
-        </Text>
       )}
 
       {/* 참고사항 */}

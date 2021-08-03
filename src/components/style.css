@@ -10,12 +10,40 @@
     overflow: scroll;
 }
 
-table {
+.ant-card-body > table {
     margin-top: 15px;
     border: 1px solid black;
 }
 
-table > th, td {
+.ant-card-body > table > th, td {
     border: 1px solid black;
     white-space: nowrap;
+}
+
+.modify-table input {
+    width: 110px;
+    text-align: center;
+}
+.modify-table input:nth-child(1) {
+    width: 40px;
+}
+
+.modify-table input:nth-last-child(1) {
+    width: 60px;
+}
+
+.modify {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modify-table {
+    display: flex;
+    flex-direction: column;
+
+}
+.modify-table-row {
+    display: flex;
 }

@@ -12,6 +12,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/recoil": "^0.0.9",
     "@types/tesseract.js": "^2.0.0",
     "antd": "^4.16.8",
     "join-images": "^0.2.6",
@@ -19,6 +20,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "recoil": "^0.4.0",
     "tesseract.js": "^2.1.4",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"

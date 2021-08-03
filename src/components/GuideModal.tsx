@@ -70,10 +70,18 @@ const GuideModal: React.FC<GuideModalProps> = props => {
         />
       </div>
       <div className="row">
-        6. 결과를 확인합니다.
+        6. 파싱 결과를 확인/수정 합니다.
         <img
           className="sample-img"
-          src="https://user-images.githubusercontent.com/23434757/127522983-8dee44f0-e3dd-4fe5-9218-852433ba6083.png"
+          src="https://user-images.githubusercontent.com/23434757/128055985-71ce5410-321a-4d6b-a25e-130b8ef4dd3b.png"
+          alt="결과를 확인합니다."
+        />
+      </div>
+      <div className="row">
+        7. 결과를 확인합니다.
+        <img
+          className="sample-img"
+          src="https://user-images.githubusercontent.com/23434757/128056193-1a64fef1-8044-49d0-978f-d0614cc15609.png"
           alt="결과를 확인합니다."
         />
       </div>
