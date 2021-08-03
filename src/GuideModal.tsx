@@ -47,6 +47,10 @@ const GuideModal: React.FC<GuideModalProps> = props => {
       </div>
       <div className="row">
         4. 캡쳐한 이미지들을 각종 툴을 사용해서 세로로 붙인 후 저장합니다.
+        <br />
+        <div style={{ color: 'red' }}>
+          (화질 매우 중요합니다.. 화질이 낮으면 인식이 불가할 수 있습니다.)
+        </div>
         <div>
           <img
             style={{ width: '30%' }}
