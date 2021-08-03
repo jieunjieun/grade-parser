@@ -1,0 +1,21 @@
+.row+.row {
+    margin-top: 30px;
+}
+
+.sample-img {
+    width: 100%;
+}
+
+.ant-card-body {
+    overflow: scroll;
+}
+
+table {
+    margin-top: 15px;
+    border: 1px solid black;
+}
+
+table > th, td {
+    border: 1px solid black;
+    white-space: nowrap;
+}

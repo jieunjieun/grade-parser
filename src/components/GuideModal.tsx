@@ -1,6 +1,6 @@
 import { Modal } from 'antd';
 import React from 'react';
-import './GuideModal.css';
+import './style.css';
 
 interface GuideModalProps {
   isShow: boolean;
@@ -38,7 +38,8 @@ const GuideModal: React.FC<GuideModalProps> = props => {
         />
       </div>
       <div className="row">
-        3. 빨간색 영역만 캡쳐를 합니다.
+        3. 빨간색 영역만 캡쳐를 합니다. (빼야할 과목이 있다면 캡처에서
+        제외해주세요.)
         <img
           className="sample-img"
           src="https://user-images.githubusercontent.com/23434757/127511366-88c3e786-1d9f-4b74-893b-458036961917.png"
