@@ -10,11 +10,11 @@ https://grade-parser.netlify.app
 `생기부 내 내신 이미지를 분석하여, 그 안에 있는 성적을 파악 후 자동으로 등급을 산출해주는 프로그램
 `
 
-을 만들게 되었습니다. 77ㅑ
+을 만들게 되었습니다.
 
 
 ## Demo
-![gradeParserPlay](https://user-images.githubusercontent.com/23434757/126682188-73db58b4-c4d5-4e2a-ae1a-9db357090dc2.gif)
+![gradeParserPlay](https://user-images.githubusercontent.com/23434757/128057539-a7ef806a-9a53-47c5-b454-dd24eef1bb9b.gif)
 
 
 ## 참고사항
