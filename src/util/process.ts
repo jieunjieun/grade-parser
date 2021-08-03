@@ -5,10 +5,11 @@ interface Setter {
   setGrade: React.Dispatch<number>;
   setProcessPercent: React.Dispatch<number>;
   setLoading: React.Dispatch<boolean>;
+  setError: React.Dispatch<boolean>;
 }
 
 export const analyze = (img: File, setter: Setter) => {
-  const { setProcessPercent, setGrade, setLoading } = setter;
+  const { setProcessPercent, setGrade, setLoading, setError } = setter;
 
   Tesseract.recognize(img, 'eng', {
     logger: m => {
@@ -21,7 +22,12 @@ export const analyze = (img: File, setter: Setter) => {
     },
   }).then(({ data: { text } }) => {
     const parsedText = parseRecognizeText(text);
-    setGrade(calculate(parsedText));
+    const resultGrade = calculate(parsedText);
+    if (!!resultGrade) {
+      setGrade(resultGrade);
+      return;
+    }
+    setError(true);
   });
 };
 
